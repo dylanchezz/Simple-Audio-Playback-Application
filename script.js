@@ -21,6 +21,7 @@ function togglePlay() {
     }
 }
 playPauseBtn.addEventListener('click', togglePlay);
+
 volumeSlider.addEventListener('input', (e) => {
     audio.volume = e.target.value;
     if (audio.volume > 0 && audio.muted) {
@@ -39,24 +40,35 @@ function toggleMute() {
     }
 }
 muteBtn.addEventListener('click', toggleMute);
+
 speedSelect.addEventListener('change', (e) => {
     audio.playbackRate = parseFloat(e.target.value);
 });
 
 function formatTime(seconds) {
+    if (isNaN(seconds)) return "0:00";
     const min = Math.floor(seconds / 60);
     const sec = Math.floor(seconds % 60);
     return `${min}:${sec < 10 ? '0' : ''}${sec}`;
 }
 
-audio.addEventListener('loadedmetadata', () => {
-    durationDisplay.textContent = formatTime(audio.duration);
-    progressBar.max = audio.duration;
-});
+// FIX: This function handles the duration once the browser calculates it
+function updateDuration() {
+    if (!isNaN(audio.duration) && audio.duration !== Infinity) {
+        durationDisplay.textContent = formatTime(audio.duration);
+        progressBar.max = audio.duration;
+    }
+}
+
+// Listen for durationchange (the most reliable event for MP3 files)
+audio.addEventListener('durationchange', updateDuration);
+audio.addEventListener('loadedmetadata', updateDuration);
 
 audio.addEventListener('timeupdate', () => {
-    currentTimeDisplay.textContent = formatTime(audio.currentTime);
-    progressBar.value = audio.currentTime;
+    if (!isNaN(audio.duration)) {
+        currentTimeDisplay.textContent = formatTime(audio.currentTime);
+        progressBar.value = audio.currentTime;
+    }
 });
 
 progressBar.addEventListener('input', (e) => {
