@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Audio Player</title>
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+
+    <div class="audio-player-card">
+        <div class="header">
+            <h2>Now Playing Peak</h2>
+            <p>Mary's Theme by Stelvio Cipriani (1969)</p>
+        </div>
+
+        <audio id="myAudio" src="Stelvio Cipriani - Mary's Theme (1969) - Marco Prati.mp3"></audio>
+
+        <div class="progress-container">
+            <span id="currentTime">0:00</span>
+            <input type="range" id="progressBar" value="0" min="0" step="1">
+            <span id="duration">0:00</span>
+        </div>
+
+        <div class="controls">
+            <button id="playPauseBtn">Play</button>
+
+            <select id="speedSelect">
+                <option value="0.5">0.5x</option>
+                <option value="1" selected>1.0x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2.0x</option>
+            </select>
+            
+            <div class="volume-container">
+                <button id="muteBtn">Mute</button>
+                <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
