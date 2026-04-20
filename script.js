@@ -52,7 +52,6 @@ function formatTime(seconds) {
     return `${min}:${sec < 10 ? '0' : ''}${sec}`;
 }
 
-// FIX: This function handles the duration once the browser calculates it
 function updateDuration() {
     if (!isNaN(audio.duration) && audio.duration !== Infinity) {
         durationDisplay.textContent = formatTime(audio.duration);
@@ -60,7 +59,7 @@ function updateDuration() {
     }
 }
 
-// Listen for durationchange (the most reliable event for MP3 files)
+
 audio.addEventListener('durationchange', updateDuration);
 audio.addEventListener('loadedmetadata', updateDuration);
 
